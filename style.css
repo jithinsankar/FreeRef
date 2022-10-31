@@ -1,0 +1,28 @@
+body{
+    font-family: 'Inter', sans-serif;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    background-color: #222;
+}
+.canvas-wrapper{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.ui{
+    background: white;
+    background-image: radial-gradient(black 3px, transparent 0);
+    background-size: 40px 40px;
+    background-position: -19px -19px;
+    width: 100px;
+    height: 100px;
+    border:red 10px solid;;
+}
+
