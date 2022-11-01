@@ -239,6 +239,26 @@ function Del()  {
   
 }
 
+function newImage(){
+
+
+  if (canvas.getActiveObject()) {
+    if (canvas.getActiveObject().isEditing) {
+      
+      return
+    }
+  }
+  
+  fabric.Image.fromURL('https://source.unsplash.com/random/300x203', function(img) {
+    img.set({
+        // id : 'image_'+index,
+        width : canvas.width / 2,
+        height : canvas.height / 2
+    });
+    canvas.add(img).renderAll().setActiveObject(img);
+});
+}
+
 function newText(){
 
 
@@ -272,13 +292,18 @@ var _clipboard = false;
 window.onload = function() {
   
     var ctrlDown = false,
+        shiftDown = false,
         ctrlKey = 17,
         cmdKey = 91,
         delKey = 8,
+        shiftKey = 16,
         vKey = 86,
         xKey = 88,
         cKey = 67,
         nKey  = 78,
+        iKey  = 73,
+        zKey  = 90,
+        yKey  = 89,
         tKey  = 84;
   
     document.addEventListener('keydown', function(e) {
@@ -287,6 +312,9 @@ window.onload = function() {
       
       if (e.keyCode == ctrlKey || e.keyCode == cmdKey){
         ctrlDown = true;
+      } 
+      if (e.keyCode == shiftKey){
+        shiftDown = true;
       } 
        
       if (ctrlDown && (e.keyCode == cKey)){
@@ -298,11 +326,21 @@ window.onload = function() {
       if (ctrlDown && (e.keyCode == vKey)) {
         Paste();
       }
+      if (ctrlDown && (e.keyCode == zKey) && !shiftDown) {
+        undo();
+      }
+      if (ctrlDown && (e.keyCode == zKey) && shiftDown) {
+        redo();
+      }
+
       if(e.keyCode == delKey){
         Del(e);
       }
       if(e.keyCode == nKey){
        newText();
+      }
+      if(e.keyCode == iKey){
+       newImage();
       }
       
     }, false);
@@ -313,7 +351,106 @@ window.onload = function() {
           ctrlDown = false;
         
       } 
+      if (e.keyCode == shiftKey ){
+          shiftDown = false;
+        
+      } 
       
     }, false);
   
 }
+
+//https://github.com/abhi06991/Undo-Redo-Fabricjs
+var _config = {
+  canvasState             : [],
+  currentStateIndex       : -1,
+  undoStatus              : false,
+  redoStatus              : false,
+  undoFinishedStatus      : 1,
+  redoFinishedStatus      : 1,
+
+};
+canvas.on(
+  'object:modified', function(){
+      updateCanvasState();
+  }
+);
+
+canvas.on(
+  'object:added', function(){
+      updateCanvasState();
+  }
+);
+
+var updateCanvasState = function() {
+  if((_config.undoStatus == false && _config.redoStatus == false)){
+      var jsonData        = canvas.toJSON();
+      var canvasAsJson        = JSON.stringify(jsonData);
+      if(_config.currentStateIndex < _config.canvasState.length-1){
+          var indexToBeInserted                  = _config.currentStateIndex+1;
+          _config.canvasState[indexToBeInserted] = canvasAsJson;
+          var numberOfElementsToRetain           = indexToBeInserted+1;
+          _config.canvasState                    = _config.canvasState.splice(0,numberOfElementsToRetain);
+      }else{
+      _config.canvasState.push(canvasAsJson);
+      }
+  _config.currentStateIndex = _config.canvasState.length-1;
+if((_config.currentStateIndex == _config.canvasState.length-1) && _config.currentStateIndex != -1){
+
+}
+  }
+}
+
+
+var undo = function() {
+  if(_config.undoFinishedStatus){
+      if(_config.currentStateIndex == -1){
+      _config.undoStatus = false;
+      }
+      else{
+      if (_config.canvasState.length >= 1) {
+      _config.undoFinishedStatus = 0;
+        if(_config.currentStateIndex != 0){
+              _config.undoStatus = true;
+            canvas.loadFromJSON(_config.canvasState[_config.currentStateIndex-1],function(){
+                          var jsonData = JSON.parse(_config.canvasState[_config.currentStateIndex-1]);
+                      canvas.renderAll();
+                  _config.undoStatus = false;
+                  _config.currentStateIndex -= 1;
+                      _config.undoFinishedStatus = 1;
+          });
+        }
+        else if(_config.currentStateIndex == 0){
+           canvas.clear();
+           console.log("cleared")
+           canvas.backgroundColor="#333";
+                  _config.undoFinishedStatus = 1;
+          _config.currentStateIndex -= 1;
+        }
+      }
+      }
+  }
+}
+
+var redo = function() {
+  if(_config.redoFinishedStatus){
+      if((_config.currentStateIndex == _config.canvasState.length-1) && _config.currentStateIndex != -1){
+      }else{
+      if (_config.canvasState.length > _config.currentStateIndex && _config.canvasState.length != 0){
+              _config.redoFinishedStatus = 0;
+          _config.redoStatus = true;
+        canvas.loadFromJSON(_config.canvasState[_config.currentStateIndex+1],function(){
+                      var jsonData = JSON.parse(_config.canvasState[_config.currentStateIndex+1]);
+                  canvas.renderAll();
+                  _config.redoStatus = false;
+              _config.currentStateIndex += 1;
+                  _config.redoFinishedStatus = 1;
+
+        });
+      }
+      }
+  }
+}
+
+
+
