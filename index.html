@@ -12,17 +12,19 @@
 <body>
     <div class="navbar">
         <h1>FreeRef</h1>
-        <a id="lnkDownload" href="#">Save image</a>
-        <button id="save">Save</button>
-        <button id="load">Load</button>
+        
+        <div class="buttons">
+            <button id="download">Download</button>
+            <button id="save">Save</button>
+            <button id="load">Load</button>
+            <button id="clearlocal">Clear</button>
+        </div>
+
         <img class="githublogo" src="/static/images/GitHub-Mark-Light-32px.png" alt="Github logo">
     </div>
     <div class="canvas-wrapper" id="canvas-wrapper">
         <canvas id="c" width="1000px" height="500px"> </canvas>
     </div>
-    <!-- <a href="https://github.com/you"><img loading="lazy" width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_darkblue_121621.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a> -->
-    <!-- <div class="ui"></div>
-    <p>Hi all</p> -->
 
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.2.4/fabric.min.js" integrity="sha512-HkRNCiaZYxQAkHpLFYI90ObSzL0vaIXL8Xe3bM51vhdYI79RDFMLTAsmVH1xVPREmTlUWexgrQMk+c3RBTsLGw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

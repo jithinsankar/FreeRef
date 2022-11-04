@@ -140,6 +140,11 @@ canvas.on('mouse:wheel', function(opt) {
       }
     }
   });
+
+
+
+
+  
 canvas.on('mouse:down', function(opt) {
 var evt = opt.e;
 if (evt.altKey === true) {
@@ -286,14 +291,16 @@ function newImage(){
     }
   }
   
-  fabric.Image.fromURL('https://source.unsplash.com/random/300x203', function(img) {
+  // fabric.Image.fromURL('https://source.unsplash.com/random/300x203', function(img) {
+  fabric.Image.fromURL('http://placekitten.com/200/300', function(img) {
     img.set({
         // id : 'image_'+index,
         width : canvas.width / 2,
         height : canvas.height / 2
     });
     canvas.add(img).renderAll().setActiveObject(img);
-});
+},
+{ crossOrigin: "anonymous" });
 }
 
 function newText(){
@@ -489,7 +496,7 @@ var redo = function() {
   }
 }
 
-var imageSaver = document.getElementById('lnkDownload');
+var imageSaver = document.getElementById('download');
 imageSaver.addEventListener('click', saveImage, false);
 
 function saveImage(e) {
@@ -508,6 +515,7 @@ function save () {
   console.log(saveJSON)
   localStorage.setItem("canvas_drawing", saveJSON);
 }
+
 const loadBtn = document.querySelector('#load')
 loadBtn.addEventListener('click', load)
 function load () {
@@ -515,6 +523,12 @@ function load () {
   console.log(dta)
   canvas.loadFromJSON(dta);
 }
+const clearlocalBtn = document.querySelector('#clearlocal')
+clearlocalBtn.addEventListener('click', clearlocal)
+function clearlocal () {
+  localStorage.clear();
+}
+
 document.addEventListener('DOMContentLoaded', function () 
 {
   if(localStorage.getItem("canvas_drawing"))
