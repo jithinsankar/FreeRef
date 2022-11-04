@@ -16,6 +16,42 @@ var canvas = new fabric.Canvas("c",{
 //  function() { bg.dirty = true; canvas.requestRenderAll() });
 // // bg.fill = '#333'
 // bg.canvas = canvas;
+// var bg = new fabric.Rect({ width: 300, height: 300, strokeWidth: 10, fill: 'pink', evented: false, selectable: false });
+// bg.fill = new fabric.Pattern({ source: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAASElEQVQ4y2NkYGD4z0A6+M3AwMBKrGJWBgYGZiibEQ0zIInDaCaoelYyHYcX/GeitomjBo4aOGrgQBj4b7RwGFwGsjAwMDAAAD2/BjgezgsZAAAAAElFTkSuQmCC' },
+// // bg.fill = new fabric.Pattern({ source: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABMSURBVDhPYwwNDWUgEQQGBkZGRgIZTBA+SeDQoUMfP34EMpi1tbUhQsSD79+/Hzt27PPnz+Q4Gw7IcTYcjGomEYxqJhGMaiYJMDAAADW/Ec6kM/QIAAAAAElFTkSuQmCC' },
+//  function() { bg.dirty = true; canvas.requestRenderAll() });
+// // bg.fill = '#333'
+// bg.canvas = canvas;
+
+
+
+const imgWidth = 50;
+
+const polka_ctx = document.createElement("canvas");
+polka_ctx.width = imgWidth;
+polka_ctx.height = imgWidth;
+
+const ctx = polka_ctx.getContext('2d');
+ctx.fillStyle = '#333';
+ctx.fillRect(0,0,imgWidth,imgWidth);
+ctx.beginPath();
+ctx.arc(5,5,1,0,2*Math.PI);
+ctx.strokeStyle = "gray"
+ctx.stroke();
+
+const polka_ctx_url = polka_ctx.toDataURL();
+
+
+
+const myImage = new Image(10, 10);
+// myImage.src = 'static/images/GitHub-Mark-Light-32px.png';
+myImage.src = 'static/images/polka.png'
+
+const bgUrl = myImage;
+canvas.setBackgroundColor(
+  {source: polka_ctx_url, repeat: 'repeat'}, 
+  canvas.renderAll.bind(canvas),
+);
 
 // canvas.backgroundImage = bg;
 
@@ -82,8 +118,8 @@ canvas.on('mouse:wheel', function(opt) {
     var delta = opt.e.deltaY;
     var zoom = canvas.getZoom();
     zoom *= 0.999 ** delta;
-    if (zoom > 20) zoom = 20;
-    if (zoom < 0.01) zoom = 0.01;
+    if (zoom > 2) zoom = 2;
+    if (zoom < 0.3) zoom = 0.3;
     canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
     opt.e.preventDefault();
     opt.e.stopPropagation();
@@ -229,11 +265,12 @@ function Paste() {
 
 function Del()  {
  
-    if (canvas.getActiveObject()) {
+    if (canvas.getActiveObjects()) {
       if (canvas.getActiveObject().isEditing) {
         return
       }
-      canvas.remove(canvas.getActiveObject());
+      canvas.remove(...canvas.getActiveObjects());
+      canvas.discardActiveObject()
     }
     
   
@@ -452,5 +489,34 @@ var redo = function() {
   }
 }
 
+var imageSaver = document.getElementById('lnkDownload');
+imageSaver.addEventListener('click', saveImage, false);
+
+function saveImage(e) {
+    this.href = canvas.toDataURL({
+        format: 'png',
+        quality: 0.8
+    });
+    this.download = 'canvas.png'
+}
 
 
+const saveBtn = document.querySelector('#save')
+saveBtn.addEventListener('click', save)
+function save () {
+  saveJSON = JSON.stringify(canvas)
+  console.log(saveJSON)
+  localStorage.setItem("canvas_drawing", saveJSON);
+}
+const loadBtn = document.querySelector('#load')
+loadBtn.addEventListener('click', load)
+function load () {
+  var dta = localStorage.getItem("canvas_drawing")
+  console.log(dta)
+  canvas.loadFromJSON(dta);
+}
+document.addEventListener('DOMContentLoaded', function () 
+{
+  if(localStorage.getItem("canvas_drawing"))
+  {canvas.loadFromJSON(localStorage.getItem("canvas_drawing"))}
+}, false);
