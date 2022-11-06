@@ -500,11 +500,13 @@ var imageSaver = document.getElementById('download');
 imageSaver.addEventListener('click', saveImage, false);
 
 function saveImage(e) {
+  console.log("downloading..")
     this.href = canvas.toDataURL({
         format: 'png',
         quality: 0.8
     });
-    this.download = 'canvas.png'
+    console.log(this.href)
+    this.download = 'canvasdfsf.png'
 }
 
 
@@ -534,3 +536,22 @@ document.addEventListener('DOMContentLoaded', function ()
   if(localStorage.getItem("canvas_drawing"))
   {canvas.loadFromJSON(localStorage.getItem("canvas_drawing"))}
 }, false);
+
+
+//https://codepen.io/technokami/pen/RwWYOzQ?editors=1010
+// const menu = document.getElementById('menu')
+// const outClick = document.getElementById('out-click')
+
+// canvasWrapper.addEventListener('contextmenu', e => {
+//   e.preventDefault()
+
+//   menu.style.top = `${e.clientY}px`
+//   menu.style.left = `${e.clientX}px`
+//   menu.classList.add('show')
+
+//   outClick.style.display = "block"
+// })
+// canvasWrapper.addEventListener('click', () => {
+//   menu.classList.remove('show')
+//   outClick.style.display = "none"
+// })
