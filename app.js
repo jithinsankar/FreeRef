@@ -496,19 +496,30 @@ var redo = function() {
   }
 }
 
+// https://codepen.io/morrowsend/pen/JgmBQj?editors=1010
 var imageSaver = document.getElementById('download');
 imageSaver.addEventListener('click', saveImage, false);
 
 function saveImage(e) {
-  console.log("downloading..")
-    this.href = canvas.toDataURL({
-        format: 'png',
-        quality: 0.8
-    });
-    console.log(this.href)
-    this.download = 'canvasdfsf.png'
+  var link = document.createElement("a");
+  var imgData = canvas.toDataURL({format:"png", quality:0.8});
+  var strDataURI = imgData.substr(22, imgData.length);
+  var blob = dataURLtoBlob(imgData);
+  var objurl = URL.createObjectURL(blob);
+
+  link.download = "canvas.png";
+  link.href = objurl;
+  link.click();
 }
 
+function dataURLtoBlob(dataurl) {
+  var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+  while(n--){
+      u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new Blob([u8arr], {type:mime});
+}
 
 const saveBtn = document.querySelector('#save')
 saveBtn.addEventListener('click', save)
@@ -538,20 +549,20 @@ document.addEventListener('DOMContentLoaded', function ()
 }, false);
 
 
-//https://codepen.io/technokami/pen/RwWYOzQ?editors=1010
-// const menu = document.getElementById('menu')
-// const outClick = document.getElementById('out-click')
+// https://codepen.io/technokami/pen/RwWYOzQ?editors=1010
+const menu = document.getElementById('menu')
+const outClick = document.getElementById('out-click')
 
-// canvasWrapper.addEventListener('contextmenu', e => {
-//   e.preventDefault()
+canvasWrapper.addEventListener('contextmenu', e => {
+  e.preventDefault()
 
-//   menu.style.top = `${e.clientY}px`
-//   menu.style.left = `${e.clientX}px`
-//   menu.classList.add('show')
+  menu.style.top = `${e.clientY}px`
+  menu.style.left = `${e.clientX}px`
+  menu.classList.add('show')
 
-//   outClick.style.display = "block"
-// })
-// canvasWrapper.addEventListener('click', () => {
-//   menu.classList.remove('show')
-//   outClick.style.display = "none"
-// })
+  outClick.style.display = "block"
+})
+canvasWrapper.addEventListener('click', () => {
+  menu.classList.remove('show')
+  outClick.style.display = "none"
+})
