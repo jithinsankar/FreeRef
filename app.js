@@ -544,6 +544,14 @@ function clearlocal () {
 
 document.addEventListener('DOMContentLoaded', function () 
 {
+const width  = window.innerWidth || document.documentElement.clientWidth || 
+document.body.clientWidth;
+const height = window.innerHeight|| document.documentElement.clientHeight|| 
+document.body.clientHeight;
+
+console.log(width, height);
+// document.getElementById('c').setAttribute("style",`width:${width}px;height:${height}px`);
+
   if(localStorage.getItem("canvas_drawing"))
   {canvas.loadFromJSON(localStorage.getItem("canvas_drawing"))}
 }, false);
