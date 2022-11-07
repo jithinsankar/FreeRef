@@ -574,3 +574,8 @@ canvasWrapper.addEventListener('click', () => {
   menu.classList.remove('show')
   outClick.style.display = "none"
 })
+
+menu.addEventListener('click',e=>{
+  menu.classList.remove('show')
+
+});

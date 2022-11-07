@@ -95,3 +95,7 @@ body{
     cursor: pointer;
   }
   
+.navbar > h1 > sup {
+  font-weight: 600;
+  font-size: x-small;
+}
