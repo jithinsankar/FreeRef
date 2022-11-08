@@ -1,4 +1,4 @@
-
+import { fabric } from "fabric";
 var canvasWrapper = document.getElementById('canvas-wrapper');
 var canvas = new fabric.Canvas("c",{
      backgroundColor: '#333',
@@ -524,6 +524,7 @@ function dataURLtoBlob(dataurl) {
 const saveBtn = document.querySelector('#save')
 saveBtn.addEventListener('click', save)
 function save () {
+  console.log("ran");
   saveJSON = JSON.stringify(canvas)
   console.log(saveJSON)
   localStorage.setItem("canvas_drawing", saveJSON);
