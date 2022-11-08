@@ -139,4 +139,50 @@ body {
   }
 }
 
+#shortcuts {
+  visibility: hidden;
+  min-width: 50%;
+  color: #fff;
+  text-align: center;
+  z-index: 1;
+  opacity: .7;
+  background-color: #292929;
+  border-radius: 10px;
+  padding: 16px;
+  font-size: 17px;
+  display: grid;
+  position: absolute;
+  top: 60px;
+  bottom: 30px;
+  left: 50%;
+  transform: translate(-50%);
+  box-shadow: 10px 10px 5px #0000002e;
+}
+
+#shortcuts > #close_shortcut {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+#shortcuts > #close_shortcut:hover {
+  cursor: pointer;
+}
+
+#shortcuts.show {
+  visibility: visible;
+}
+
+#shortcuts > h1 {
+  grid-area: 1 / 1 / auto / span 3;
+}
+
+.sct_elem > .sct {
+  font-weight: 600;
+}
+
+.sct_elem > .sct_desc {
+  font-weight: 100;
+}
+
 /*# sourceMappingURL=index.3a01df49.css.map */

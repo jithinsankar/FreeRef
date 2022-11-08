@@ -539,6 +539,7 @@ var canvas = new (0, _fabric.fabric).Canvas("c", {
     HOVER_CURSOR: "pointer"
 });
 var snackbar = document.getElementById("snackbar");
+var shortcuts = document.getElementById("shortcuts");
 // canvas.setWidth(1000);
 // canvas.setWidth(document.body.scrollWidth);
 // canvas.setHeight(400)
@@ -741,6 +742,9 @@ function Del() {
         canvas.discardActiveObject();
     }
 }
+function display_shortcuts() {
+    shortcuts.className = "show";
+}
 function newImage() {
     if (canvas.getActiveObject()) {
         if (canvas.getActiveObject().isEditing) return;
@@ -774,7 +778,7 @@ function newText() {
 }
 var _clipboard = false;
 window.onload = function() {
-    var ctrlDown = false, shiftDown = false, ctrlKey = 17, cmdKey = 91, delKey = 8, shiftKey = 16, vKey = 86, xKey = 88, cKey = 67, nKey = 78, iKey = 73, zKey = 90, yKey = 89, tKey = 84;
+    var ctrlDown = false, shiftDown = false, ctrlKey = 17, cmdKey = 91, delKey = 8, shiftKey = 16, vKey = 86, xKey = 88, cKey = 67, nKey = 78, iKey = 73, zKey = 90, yKey = 89, tKey = 84, qKey = 81;
     document.addEventListener("keydown", function(e) {
         console.log(e.keyCode);
         if (e.keyCode == ctrlKey || e.keyCode == cmdKey) ctrlDown = true;
@@ -782,6 +786,7 @@ window.onload = function() {
         if (ctrlDown && e.keyCode == cKey) Copy();
         if (ctrlDown && e.keyCode == xKey) Cut();
         if (ctrlDown && e.keyCode == vKey) Paste();
+        if (ctrlDown && e.keyCode == qKey) display_shortcuts();
         if (ctrlDown && e.keyCode == zKey && !shiftDown) undo();
         if (ctrlDown && e.keyCode == zKey && shiftDown) redo();
         if (e.keyCode == delKey) Del(e);
@@ -945,6 +950,10 @@ canvasWrapper.addEventListener("click", ()=>{
 });
 menu.addEventListener("click", (e)=>{
     menu.classList.remove("show");
+});
+var close_shortcut = document.getElementById("close_shortcut");
+close_shortcut.addEventListener("click", ()=>{
+    shortcuts.className = shortcuts.className.replace("show", "");
 });
 
 },{"fabric":"jHiDH"}],"jHiDH":[function(require,module,exports) {

@@ -6,7 +6,7 @@ var canvas = new fabric.Canvas("c",{
   });
 
 var snackbar = document.getElementById("snackbar");
-
+var shortcuts = document.getElementById("shortcuts");
 // canvas.setWidth(1000);
 // canvas.setWidth(document.body.scrollWidth);
 // canvas.setHeight(400)
@@ -282,6 +282,11 @@ function Del()  {
   
 }
 
+function display_shortcuts(){
+  shortcuts.className = "show";
+
+}
+
 function newImage(){
 
 
@@ -349,7 +354,8 @@ window.onload = function() {
         iKey  = 73,
         zKey  = 90,
         yKey  = 89,
-        tKey  = 84;
+        tKey  = 84,
+        qKey = 81;
   
     document.addEventListener('keydown', function(e) {
       
@@ -370,6 +376,9 @@ window.onload = function() {
       } 
       if (ctrlDown && (e.keyCode == vKey)) {
         Paste();
+      }
+      if (ctrlDown && (e.keyCode == qKey)) {
+        display_shortcuts();
       }
       if (ctrlDown && (e.keyCode == zKey) && !shiftDown) {
         undo();
@@ -591,3 +600,8 @@ menu.addEventListener('click',e=>{
   menu.classList.remove('show')
 
 });
+
+var close_shortcut = document.getElementById('close_shortcut');
+close_shortcut.addEventListener('click',()=>{
+  shortcuts.className = shortcuts.className.replace("show", "")
+})

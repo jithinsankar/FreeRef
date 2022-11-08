@@ -143,3 +143,53 @@ body{
   from {bottom: 30px; opacity: 1;}
   to {bottom: 0; opacity: 0;}
 }
+#shortcuts {
+  visibility: hidden;
+  display: grid;
+
+
+  min-width: 50%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-color: rgb(41, 41, 41);
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: absolute;
+  z-index: 1;
+
+  bottom: 30px;
+  top:60px;
+  font-size: 17px;
+  border-radius: 10px;
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.18);
+  opacity: 0.7;
+}
+
+#shortcuts > #close_shortcut{
+  position: absolute;
+  top: 15px;
+  right: 15px;
+
+}
+#shortcuts > #close_shortcut:hover{
+  cursor: pointer;
+
+}
+
+#shortcuts.show {
+  visibility: visible;
+
+}
+
+#shortcuts > h1 {
+  grid-column: 1 / span 3;
+  grid-row: 1;
+}
+.sct_elem > .sct{
+  font-weight: 600;
+}
+.sct_elem > .sct_desc{
+  font-weight: 100;
+}
