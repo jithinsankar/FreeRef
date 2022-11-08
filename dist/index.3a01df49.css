@@ -93,4 +93,50 @@ body {
   font-weight: 600;
 }
 
+#snackbar {
+  visibility: hidden;
+  min-width: 250px;
+  color: #fff;
+  text-align: center;
+  z-index: 1;
+  background-color: #292929;
+  border-radius: 10px;
+  margin-left: -125px;
+  padding: 16px;
+  font-size: 17px;
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  box-shadow: 10px 10px 5px #0000002e;
+}
+
+#snackbar.show {
+  visibility: visible;
+  animation: .5s fadein, .5s 2.5s fadeout;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+    bottom: 0;
+  }
+
+  to {
+    opacity: 1;
+    bottom: 30px;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 1;
+    bottom: 30px;
+  }
+
+  to {
+    opacity: 0;
+    bottom: 0;
+  }
+}
+
 /*# sourceMappingURL=index.3a01df49.css.map */

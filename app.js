@@ -4,7 +4,8 @@ var canvas = new fabric.Canvas("c",{
      backgroundColor: '#333',
     HOVER_CURSOR: 'pointer'
   });
-  
+
+var snackbar = document.getElementById("snackbar");
 
 // canvas.setWidth(1000);
 // canvas.setWidth(document.body.scrollWidth);
@@ -528,6 +529,10 @@ function save () {
   saveJSON = JSON.stringify(canvas)
   console.log(saveJSON)
   localStorage.setItem("canvas_drawing", saveJSON);
+
+  snackbar.className = "show";
+  snackbar.innerHTML = "Saved!"
+  setTimeout(function(){ snackbar.className = snackbar.className.replace("show", ""); }, 3000);
 }
 
 const loadBtn = document.querySelector('#load')
@@ -536,11 +541,17 @@ function load () {
   var dta = localStorage.getItem("canvas_drawing")
   console.log(dta)
   canvas.loadFromJSON(dta);
+  snackbar.className = "show";
+  snackbar.innerHTML = "Loaded!"
+  setTimeout(function(){ snackbar.className = snackbar.className.replace("show", ""); }, 3000);
 }
 const clearlocalBtn = document.querySelector('#clearlocal')
 clearlocalBtn.addEventListener('click', clearlocal)
 function clearlocal () {
   localStorage.clear();
+  snackbar.className = "show";
+  snackbar.innerHTML = "Storage Cleared!"
+  setTimeout(function(){ snackbar.className = snackbar.className.replace("show", ""); }, 3000);
 }
 
 document.addEventListener('DOMContentLoaded', function () 
