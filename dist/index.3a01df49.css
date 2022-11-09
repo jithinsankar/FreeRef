@@ -47,7 +47,7 @@ body {
   right: 10px;
 }
 
-.navbar > .githublogo {
+.navbar > #githublogo {
   max-width: 32px;
   max-height: 32px;
   margin-top: auto;
@@ -112,7 +112,7 @@ body {
 
 #snackbar.show {
   visibility: visible;
-  animation: .5s fadein, .5s 2.5s fadeout;
+  animation: .5s fadein;
 }
 
 @keyframes fadein {

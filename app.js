@@ -7,24 +7,6 @@ var canvas = new fabric.Canvas("c",{
 
 var snackbar = document.getElementById("snackbar");
 var shortcuts = document.getElementById("shortcuts");
-// canvas.setWidth(1000);
-// canvas.setWidth(document.body.scrollWidth);
-// canvas.setHeight(400)
-
-// var bg = new fabric.Rect({ width: 300, height: 300, strokeWidth: 10, fill: 'pink', evented: false, selectable: false });
-// bg.fill = new fabric.Pattern({ source: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAASElEQVQ4y2NkYGD4z0A6+M3AwMBKrGJWBgYGZiibEQ0zIInDaCaoelYyHYcX/GeitomjBo4aOGrgQBj4b7RwGFwGsjAwMDAAAD2/BjgezgsZAAAAAElFTkSuQmCC' },
-// // bg.fill = new fabric.Pattern({ source: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABMSURBVDhPYwwNDWUgEQQGBkZGRgIZTBA+SeDQoUMfP34EMpi1tbUhQsSD79+/Hzt27PPnz+Q4Gw7IcTYcjGomEYxqJhGMaiYJMDAAADW/Ec6kM/QIAAAAAElFTkSuQmCC' },
-//  function() { bg.dirty = true; canvas.requestRenderAll() });
-// // bg.fill = '#333'
-// bg.canvas = canvas;
-// var bg = new fabric.Rect({ width: 300, height: 300, strokeWidth: 10, fill: 'pink', evented: false, selectable: false });
-// bg.fill = new fabric.Pattern({ source: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAASElEQVQ4y2NkYGD4z0A6+M3AwMBKrGJWBgYGZiibEQ0zIInDaCaoelYyHYcX/GeitomjBo4aOGrgQBj4b7RwGFwGsjAwMDAAAD2/BjgezgsZAAAAAElFTkSuQmCC' },
-// // bg.fill = new fabric.Pattern({ source: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABMSURBVDhPYwwNDWUgEQQGBkZGRgIZTBA+SeDQoUMfP34EMpi1tbUhQsSD79+/Hzt27PPnz+Q4Gw7IcTYcjGomEYxqJhGMaiYJMDAAADW/Ec6kM/QIAAAAAElFTkSuQmCC' },
-//  function() { bg.dirty = true; canvas.requestRenderAll() });
-// // bg.fill = '#333'
-// bg.canvas = canvas;
-
-
 
 const imgWidth = 50;
 
@@ -333,8 +315,56 @@ function newText(){
   canvas.setActiveObject(newText)
 
 }
+function bring2front(){
+  if (canvas.getActiveObject()) {
+    if (canvas.getActiveObject().isEditing) {
+      
+      return
+    }
+    var activeObj = canvas.getActiveObject();
+canvas.bringToFront(activeObj);
+canvas.renderAll();
+}
+}
+function send2back(){
+  if (canvas.getActiveObject()) {
+    if (canvas.getActiveObject().isEditing) {
+      
+      return
+    }
+    var activeObj = canvas.getActiveObject();
+canvas.sendToBack(activeObj);
+canvas.renderAll();
+}
+}
+function BringForwards(){
+  if (canvas.getActiveObject()) {
+    if (canvas.getActiveObject().isEditing) {
+      
+      return
+    }
+    var activeObj = canvas.getActiveObject();
+canvas.bringForward(activeObj);
+canvas.renderAll();
+}
+}
+function SendBackwards(){
+  if (canvas.getActiveObject()) {
+    if (canvas.getActiveObject().isEditing) {
+      
+      return
+    }
+    var activeObj = canvas.getActiveObject();
+canvas.sendBackwards(activeObj);
+canvas.renderAll();
+}
+}
 
 
+document.getElementById('Bring2Front').addEventListener('click',bring2front)
+document.getElementById('Send2Back').addEventListener('click',send2back)
+document.getElementById('BringForwards').addEventListener('click',BringForwards)
+document.getElementById('SendBackwards').addEventListener('click',SendBackwards)
 
 var _clipboard = false;
 
@@ -355,6 +385,8 @@ window.onload = function() {
         zKey  = 90,
         yKey  = 89,
         tKey  = 84,
+        fKey  = 70,
+        bKey  = 66,
         qKey = 81;
   
     document.addEventListener('keydown', function(e) {
@@ -395,6 +427,12 @@ window.onload = function() {
       }
       if(e.keyCode == iKey){
        newImage();
+      }
+      if(e.keyCode == fKey){
+       bring2front();
+      }
+      if(e.keyCode == bKey){
+        send2back();
       }
       
     }, false);
@@ -575,6 +613,10 @@ console.log(width, height);
 
   if(localStorage.getItem("canvas_drawing"))
   {canvas.loadFromJSON(localStorage.getItem("canvas_drawing"))}
+
+  snackbar.className = "show";
+  snackbar.innerHTML = "Press Ctrl+Q for shortcuts  "
+  setTimeout(function(){ snackbar.className = snackbar.className.replace("show", ""); }, 8000);
 }, false);
 
 
@@ -605,3 +647,6 @@ var close_shortcut = document.getElementById('close_shortcut');
 close_shortcut.addEventListener('click',()=>{
   shortcuts.className = shortcuts.className.replace("show", "")
 })
+
+var git_logo = document.getElementById("githublogo");
+git_logo.addEventListener('click',()=>{console.log("logo pressed");window.location.href="https://github.com/jithinsankar/FreeRef"});

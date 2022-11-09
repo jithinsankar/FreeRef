@@ -776,9 +776,45 @@ function newText() {
     canvas.add(newText);
     canvas.setActiveObject(newText);
 }
+function bring2front() {
+    if (canvas.getActiveObject()) {
+        if (canvas.getActiveObject().isEditing) return;
+        var activeObj = canvas.getActiveObject();
+        canvas.bringToFront(activeObj);
+        canvas.renderAll();
+    }
+}
+function send2back() {
+    if (canvas.getActiveObject()) {
+        if (canvas.getActiveObject().isEditing) return;
+        var activeObj = canvas.getActiveObject();
+        canvas.sendToBack(activeObj);
+        canvas.renderAll();
+    }
+}
+function BringForwards() {
+    if (canvas.getActiveObject()) {
+        if (canvas.getActiveObject().isEditing) return;
+        var activeObj = canvas.getActiveObject();
+        canvas.bringForward(activeObj);
+        canvas.renderAll();
+    }
+}
+function SendBackwards() {
+    if (canvas.getActiveObject()) {
+        if (canvas.getActiveObject().isEditing) return;
+        var activeObj = canvas.getActiveObject();
+        canvas.sendBackwards(activeObj);
+        canvas.renderAll();
+    }
+}
+document.getElementById("Bring2Front").addEventListener("click", bring2front);
+document.getElementById("Send2Back").addEventListener("click", send2back);
+document.getElementById("BringForwards").addEventListener("click", BringForwards);
+document.getElementById("SendBackwards").addEventListener("click", SendBackwards);
 var _clipboard = false;
 window.onload = function() {
-    var ctrlDown = false, shiftDown = false, ctrlKey = 17, cmdKey = 91, delKey = 8, shiftKey = 16, vKey = 86, xKey = 88, cKey = 67, nKey = 78, iKey = 73, zKey = 90, yKey = 89, tKey = 84, qKey = 81;
+    var ctrlDown = false, shiftDown = false, ctrlKey = 17, cmdKey = 91, delKey = 8, shiftKey = 16, vKey = 86, xKey = 88, cKey = 67, nKey = 78, iKey = 73, zKey = 90, yKey = 89, tKey = 84, fKey = 70, bKey = 66, qKey = 81;
     document.addEventListener("keydown", function(e) {
         console.log(e.keyCode);
         if (e.keyCode == ctrlKey || e.keyCode == cmdKey) ctrlDown = true;
@@ -792,6 +828,8 @@ window.onload = function() {
         if (e.keyCode == delKey) Del(e);
         if (e.keyCode == nKey) newText();
         if (e.keyCode == iKey) newImage();
+        if (e.keyCode == fKey) bring2front();
+        if (e.keyCode == bKey) send2back();
     }, false);
     document.addEventListener("keyup", function(e) {
         if (e.keyCode == ctrlKey || e.keyCode == cmdKey) ctrlDown = false;
@@ -933,6 +971,11 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log(width, height);
     // document.getElementById('c').setAttribute("style",`width:${width}px;height:${height}px`);
     if (localStorage.getItem("canvas_drawing")) canvas.loadFromJSON(localStorage.getItem("canvas_drawing"));
+    snackbar.className = "show";
+    snackbar.innerHTML = "Press Ctrl+Q for shortcuts  ";
+    setTimeout(function() {
+        snackbar.className = snackbar.className.replace("show", "");
+    }, 8000);
 }, false);
 // https://codepen.io/technokami/pen/RwWYOzQ?editors=1010
 const menu = document.getElementById("menu");
@@ -954,6 +997,11 @@ menu.addEventListener("click", (e)=>{
 var close_shortcut = document.getElementById("close_shortcut");
 close_shortcut.addEventListener("click", ()=>{
     shortcuts.className = shortcuts.className.replace("show", "");
+});
+var git_logo = document.getElementById("githublogo");
+git_logo.addEventListener("click", ()=>{
+    console.log("logo pressed");
+    window.location.href = "https://github.com/jithinsankar/FreeRef";
 });
 
 },{"fabric":"jHiDH"}],"jHiDH":[function(require,module,exports) {
