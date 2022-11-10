@@ -16,7 +16,6 @@ jobs:
         id: auto-commit-action
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          file_pattern: 'dist/*'
           commit_message: build project for github pages
       - name: Push changes
         if: steps.auto-commit-action.outputs.changes_detected == 'true'
